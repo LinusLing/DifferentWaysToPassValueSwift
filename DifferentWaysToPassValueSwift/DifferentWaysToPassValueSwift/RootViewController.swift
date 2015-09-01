@@ -46,7 +46,6 @@ class RootViewController: UIViewController, delegateOfNegative {
         blo.passBlockValue = {
             (title:String) in
             self.blockTF.text = title
-            
         }
         
         self.presentViewController(blo, animated: true, completion: nil)
