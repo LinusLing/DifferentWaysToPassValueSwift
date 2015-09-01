@@ -49,7 +49,6 @@ class RootViewController: UIViewController, delegateOfNegative {
         }
         
         self.presentViewController(blo, animated: true, completion: nil)
-        
     }
     
     func saveUD(title:String) {
