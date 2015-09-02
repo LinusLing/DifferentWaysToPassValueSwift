@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		15D440A01B96D5B0001419E0 /* KVOViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D4409F1B96D5B0001419E0 /* KVOViewController.swift */; };
 		15DD175C1B95440100DA4868 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DD175B1B95440100DA4868 /* AppDelegate.swift */; };
 		15DD175E1B95440100DA4868 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DD175D1B95440100DA4868 /* RootViewController.swift */; };
 		15DD17611B95440100DA4868 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 15DD175F1B95440100DA4868 /* Main.storyboard */; };
@@ -28,6 +29,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		15D4409F1B96D5B0001419E0 /* KVOViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KVOViewController.swift; sourceTree = "<group>"; };
 		15DD17561B95440100DA4868 /* DifferentWaysToPassValueSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DifferentWaysToPassValueSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		15DD175A1B95440100DA4868 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		15DD175B1B95440100DA4868 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -85,6 +87,7 @@
 				15DD175D1B95440100DA4868 /* RootViewController.swift */,
 				15DD177B1B95477D00DA4868 /* DelegateViewController.swift */,
 				15DD177D1B95684E00DA4868 /* BlockViewController.swift */,
+				15D4409F1B96D5B0001419E0 /* KVOViewController.swift */,
 				15DD175F1B95440100DA4868 /* Main.storyboard */,
 				15DD17621B95440100DA4868 /* Images.xcassets */,
 				15DD17641B95440100DA4868 /* LaunchScreen.xib */,
@@ -221,6 +224,7 @@
 				15DD175E1B95440100DA4868 /* RootViewController.swift in Sources */,
 				15DD175C1B95440100DA4868 /* AppDelegate.swift in Sources */,
 				15DD177E1B95684E00DA4868 /* BlockViewController.swift in Sources */,
+				15D440A01B96D5B0001419E0 /* KVOViewController.swift in Sources */,
 				15DD177C1B95477D00DA4868 /* DelegateViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -413,6 +417,7 @@
 				15DD17771B95440100DA4868 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		15DD17781B95440100DA4868 /* Build configuration list for PBXNativeTarget "DifferentWaysToPassValueSwiftTests" */ = {
 			isa = XCConfigurationList;
@@ -421,6 +426,7 @@
 				15DD177A1B95440100DA4868 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
