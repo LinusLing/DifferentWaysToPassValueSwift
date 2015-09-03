@@ -75,6 +75,9 @@
                                 <state key="normal" title="跳转">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="KVOButtonDidTapped:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="hBF-Re-yIy"/>
+                                </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="positive root value KVO" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pHZ-qX-C5j">
                                 <rect key="frame" x="201" y="517" width="199" height="30"/>
@@ -115,6 +118,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="PJ3-W4-PuS"/>
                     <connections>
+                        <outlet property="KVOTF" destination="pHZ-qX-C5j" id="NUH-8t-2QT"/>
                         <outlet property="blockTF" destination="egq-9K-RSc" id="RWc-4P-dNr"/>
                         <outlet property="delegateTF" destination="MYW-ec-dUn" id="RTd-zJ-O0m"/>
                     </connections>

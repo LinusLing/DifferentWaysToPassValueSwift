@@ -11,12 +11,19 @@ import UIKit
 class RootViewController: UIViewController, delegateOfNegative {
     
     @IBOutlet weak var delegateTF: UITextField!
-    
+    @IBOutlet weak var KVOTF: UITextField!
     @IBOutlet weak var blockTF: UITextField!
+    
+    var kvoVariable:String = String()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         println("RootViewController viewDidLoad")
+        
+        var center = NSNotificationCenter.defaultCenter()
+        var mainq = NSOperationQueue.mainQueue()
+        addObserver(self, forKeyPath: "kvoVariable", options: NSKeyValueObservingOptions.New, context: nil)
     }
     
     @IBAction func delegateButtonDidTapped(sender: AnyObject) {
@@ -56,12 +63,22 @@ class RootViewController: UIViewController, delegateOfNegative {
         NSUserDefaults().synchronize()
     }
     
+    // ------------------------------------
+    
+    @IBAction func KVOButtonDidTapped(sender: AnyObject) {
+        
+        
+        
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
+    deinit {
+        
+    }
     
 }
 
