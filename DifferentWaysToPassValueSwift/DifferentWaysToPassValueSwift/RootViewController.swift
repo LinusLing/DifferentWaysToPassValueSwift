@@ -66,7 +66,9 @@ class RootViewController: UIViewController, delegateOfNegative {
     // ------------------------------------
     
     @IBAction func KVOButtonDidTapped(sender: AnyObject) {
-        
+        var kvo:KVOViewController = KVOViewController()
+
+        self.presentViewController(kvo, animated: true, completion: nil)
         
         
     }
