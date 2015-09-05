@@ -27,8 +27,9 @@ class kvo: NSObject {
         println("deinit")
     }
 }
-
 class KVOViewController: UIViewController {
+    var k = kvo()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -36,12 +37,24 @@ class KVOViewController: UIViewController {
         self.view.backgroundColor = UIColor.whiteColor()
         
         
-        var k = kvo()
-        k.addObserver(self, forKeyPath: "title", options: NSKeyValueObservingOptions.New | NSKeyValueObservingOptions.Old, context: nil)
+//        k.addObserver(self, forKeyPath: "title", options: NSKeyValueObservingOptions.New | NSKeyValueObservingOptions.Old, context: nil)
         k.title = 250.0
         
-        k.title = 300.0
-        k.removeObserver(self, forKeyPath: "title", context: nil)
+        var but:UIButton = UIButton(frame: CGRect(x: 20, y: 140, width: 50, height: 20))
+        but.setTitle("返回", forState: UIControlState.Normal)
+        but.backgroundColor = UIColor.lightGrayColor()
+        self.view.addSubview(but)
+        
+        but.addTarget(self, action: "back:", forControlEvents: UIControlEvents.TouchUpInside)
+    }
+    
+    func back(sender:UIButton) {
+        
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    deinit {
+//        k.removeObserver(self, forKeyPath: "title", context: nil)
     }
     
     override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {

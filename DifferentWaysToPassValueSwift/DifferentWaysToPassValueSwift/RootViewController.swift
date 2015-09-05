@@ -66,20 +66,32 @@ class RootViewController: UIViewController, delegateOfNegative {
     // ------------------------------------
     
     @IBAction func KVOButtonDidTapped(sender: AnyObject) {
-        var kvo:KVOViewController = KVOViewController()
-
-        self.presentViewController(kvo, animated: true, completion: nil)
+        var kvc:KVOViewController = KVOViewController()
+        kvc.k = kvo()
         
+        // addObserver添加监听
+        kvc.k.addObserver(self, forKeyPath: "title", options: NSKeyValueObservingOptions.Old | NSKeyValueObservingOptions.New, context: nil)
         
+        self.presentViewController(kvc, animated: true, completion: nil)
+        
+        // removeObserver移除监听
+        // add和remove必须对应，否则报错
+        kvc.k.removeObserver(self, forKeyPath: "title", context: nil)
+    }
+    
+    // 监听对象的属性或者实例变量发生变化，就自动调用该函数，执行相应操作
+    override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
+        if keyPath == "title" {
+            println(change)
+            var newvalue: AnyObject? = change["new"]
+            println("the new value is \(newvalue!)")
+            self.KVOTF.text = "\(newvalue!)"
+        }
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    deinit {
-        
     }
     
 }
