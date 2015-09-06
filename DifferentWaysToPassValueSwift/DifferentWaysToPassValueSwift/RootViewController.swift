@@ -16,6 +16,8 @@ class RootViewController: UIViewController, delegateOfNegative {
     
     var kvoVariable:String = String()
     
+    var kvc:KVOViewController = KVOViewController() //全局的KVOvc方便在deinit时removeobserver
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -66,17 +68,15 @@ class RootViewController: UIViewController, delegateOfNegative {
     // ------------------------------------
     
     @IBAction func KVOButtonDidTapped(sender: AnyObject) {
-        var kvc:KVOViewController = KVOViewController()
+        
         kvc.k = kvo()
         
         // addObserver添加监听
         kvc.k.addObserver(self, forKeyPath: "title", options: NSKeyValueObservingOptions.Old | NSKeyValueObservingOptions.New, context: nil)
-        
+        kvc.k.title = self.KVOTF.text
         self.presentViewController(kvc, animated: true, completion: nil)
         
-        // removeObserver移除监听
-        // add和remove必须对应，否则报错
-        kvc.k.removeObserver(self, forKeyPath: "title", context: nil)
+        
     }
     
     // 监听对象的属性或者实例变量发生变化，就自动调用该函数，执行相应操作
@@ -87,6 +87,12 @@ class RootViewController: UIViewController, delegateOfNegative {
             println("the new value is \(newvalue!)")
             self.KVOTF.text = "\(newvalue!)"
         }
+    }
+    
+    deinit {
+        // removeObserver移除监听
+        // add和remove必须对应，否则报错
+        kvc.k.removeObserver(self, forKeyPath: "title", context: nil)
     }
     
     override func didReceiveMemoryWarning() {
