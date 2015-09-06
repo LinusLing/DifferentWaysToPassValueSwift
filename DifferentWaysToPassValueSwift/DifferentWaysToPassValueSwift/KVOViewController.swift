@@ -8,8 +8,11 @@
 
 import UIKit
 
+//要监听的对象的定义
 class kvo: NSObject {
     var ptitle : String = ""
+    
+    // dynamic修饰的即为可支持KVO
     dynamic var title : String {
         get {
             return self.ptitle
@@ -28,7 +31,7 @@ class kvo: NSObject {
     }
 }
 class KVOViewController: UIViewController {
-    var k = kvo()
+    var k = kvo() //监听的对象
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -85,7 +85,7 @@ class RootViewController: UIViewController, delegateOfNegative {
             println(change)
             var newvalue: AnyObject? = change["new"]
             println("the new value is \(newvalue!)")
-            self.KVOTF.text = "\(newvalue!)"
+            self.KVOTF.text = "\(newvalue!)" //将监听到的变化值赋值给TF来显示
         }
     }
     

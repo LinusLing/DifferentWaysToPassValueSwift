@@ -92,5 +92,88 @@ func back(sender:UIButton) {
 
 ### 无向传值
 
-其实就是利用`NSUserDefaults`来存取数据，哈哈。
+* 其实就是利用`NSUserDefaults`来存取数据，哈哈。
+
+* KVO
+
+### KVO
+
+KVO只要是监听的属性，不管是正向还是反向都会触发`observeValueForKeyPath`方法，在其中做相应的显示即可。
+
+RootVC:
+
+```
+var kvc:KVOViewController = KVOViewController() //全局的KVOvc方便在deinit时removeobserver
+```
+
+```
+@IBAction func KVOButtonDidTapped(sender: AnyObject) {
+    kvc.k = kvo()
+        
+    // addObserver添加监听
+    kvc.k.addObserver(self, forKeyPath: "title", options: NSKeyValueObservingOptions.Old | NSKeyValueObservingOptions.New, context: nil)
+    
+    kvc.k.title = self.KVOTF.text
+    
+    self.presentViewController(kvc, animated: true, completion: nil)
+}
+```
+
+```
+// 监听对象的属性或者实例变量发生变化，就自动调用该函数，执行相应操作
+override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
+    if keyPath == "title" {
+        println(change)
+        var newvalue: AnyObject? = change["new"]
+        println("the new value is \(newvalue!)")
+        self.KVOTF.text = "\(newvalue!)" //将监听到的变化值赋值给TF来显示
+    }
+}
+
+deinit {
+    // removeObserver移除监听
+    // add和remove必须对应，否则报错
+    kvc.k.removeObserver(self, forKeyPath: "title", context: nil)
+}
+```
+
+KVOVC:
+
+```
+//要监听的对象的定义
+class kvo: NSObject {
+    var ptitle : String = ""
+    
+    // dynamic修饰的即为可支持KVO
+    dynamic var title : String {
+        get {
+            return self.ptitle
+        }
+        set {
+            self.ptitle = newValue
+        }
+    }
+    
+    override init() {
+        println("init")
+    }
+    
+    deinit {
+        println("deinit")
+    }
+}
+```
+
+```
+func back(sender:UIButton) {
+    var tit = (self.view.viewWithTag(13) as UITextField).text
+    
+    k.title = tit //对监听的属性赋值会触发observeValueForKeyPath方法
+    
+    self.dismissViewControllerAnimated(true, completion: nil)
+}
+```
+
+
+
 
