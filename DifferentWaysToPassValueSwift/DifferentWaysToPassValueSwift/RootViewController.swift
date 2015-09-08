@@ -13,6 +13,7 @@ class RootViewController: UIViewController, delegateOfNegative {
     @IBOutlet weak var delegateTF: UITextField!
     @IBOutlet weak var KVOTF: UITextField!
     @IBOutlet weak var blockTF: UITextField!
+    @IBOutlet weak var NotificationTF: UITextField!
     
     var kvoVariable:String = String()
     
@@ -94,6 +95,16 @@ class RootViewController: UIViewController, delegateOfNegative {
         // add和remove必须对应，否则报错
         kvc.k.removeObserver(self, forKeyPath: "title", context: nil)
     }
+    
+    // ------------------------------------
+    
+    @IBAction func NotificationButtonDidTapped(sender: AnyObject) {
+
+        
+        
+        
+    }
+
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
