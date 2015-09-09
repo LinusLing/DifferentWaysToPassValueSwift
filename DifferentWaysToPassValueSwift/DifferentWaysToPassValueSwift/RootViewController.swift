@@ -14,19 +14,18 @@ class RootViewController: UIViewController, delegateOfNegative {
     @IBOutlet weak var KVOTF: UITextField!
     @IBOutlet weak var blockTF: UITextField!
     @IBOutlet weak var NotificationTF: UITextField!
+
     
-    var kvoVariable:String = String()
-    
-    var kvc:KVOViewController = KVOViewController() //全局的KVOvc方便在deinit时removeobserver
+    var kvc:KVOViewController = KVOViewController() // 全局的KVOvc方便在deinit时removeobserver
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         println("RootViewController viewDidLoad")
+
         
-        var center = NSNotificationCenter.defaultCenter()
-        var mainq = NSOperationQueue.mainQueue()
-        addObserver(self, forKeyPath: "kvoVariable", options: NSKeyValueObservingOptions.New, context: nil)
+        // 注册一个通知
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "notifReceive:", name: "notifName", object: nil)
     }
     
     @IBAction func delegateButtonDidTapped(sender: AnyObject) {
@@ -34,13 +33,13 @@ class RootViewController: UIViewController, delegateOfNegative {
         var title = self.delegateTF.text
         
         var del:DelegateViewController = DelegateViewController()
-        del.positiveValue = title //正向传值
+        del.positiveValue = title // 正向传值
         self.presentViewController(del, animated: true, completion: nil)
         
-        del.delegate = self //设置下一个VC的delegate为当前的rootVC
+        del.delegate = self // 设置下一个VC的delegate为当前的rootVC
     }
     
-    //实现delegate的方法
+    // 实现delegate的方法
     func passValue(str:String) {
         self.delegateTF.text = str
     }
@@ -52,7 +51,7 @@ class RootViewController: UIViewController, delegateOfNegative {
         
         var blo:BlockViewController = BlockViewController()
         
-        //设置block中要传递的值的接收方式
+        // 设置block中要传递的值的接收方式
         blo.passBlockValue = {
             (title:String) in
             self.blockTF.text = title
@@ -76,8 +75,7 @@ class RootViewController: UIViewController, delegateOfNegative {
         kvc.k.addObserver(self, forKeyPath: "title", options: NSKeyValueObservingOptions.Old | NSKeyValueObservingOptions.New, context: nil)
         kvc.k.title = self.KVOTF.text
         self.presentViewController(kvc, animated: true, completion: nil)
-        
-        
+
     }
     
     // 监听对象的属性或者实例变量发生变化，就自动调用该函数，执行相应操作
@@ -86,7 +84,7 @@ class RootViewController: UIViewController, delegateOfNegative {
             println(change)
             var newvalue: AnyObject? = change["new"]
             println("the new value is \(newvalue!)")
-            self.KVOTF.text = "\(newvalue!)" //将监听到的变化值赋值给TF来显示
+            self.KVOTF.text = "\(newvalue!)" // 将监听到的变化值赋值给TF来显示
         }
     }
     
@@ -94,17 +92,28 @@ class RootViewController: UIViewController, delegateOfNegative {
         // removeObserver移除监听
         // add和remove必须对应，否则报错
         kvc.k.removeObserver(self, forKeyPath: "title", context: nil)
-    }
-    
+        
+
     // ------------------------------------
+        
+        // removeObserver移除对应name的通知
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "notifName", object: nil)
+        
+    }
     
     @IBAction func NotificationButtonDidTapped(sender: AnyObject) {
-
+        var noti:NotificationViewController = NotificationViewController()
+        noti.positiveValue = self.NotificationTF.text
         
-        
+        self.presentViewController(noti, animated: true, completion: nil)
         
     }
 
+    // 每次调用对应name的postNotificationName方法会由selector处理
+    func notifReceive(notification:NSNotification) {
+        self.NotificationTF.text = "\(notification.object!)"
+        println("notif : \(notification.name), \(notification.object!)")
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

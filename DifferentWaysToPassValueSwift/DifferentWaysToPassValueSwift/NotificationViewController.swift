@@ -10,11 +10,40 @@ import UIKit
 
 class NotificationViewController: UIViewController {
     
-
+    var positiveValue = String()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        println("NotificationViewController viewDidLoad")
+        self.view.backgroundColor = UIColor.whiteColor()
+
+        var label:UILabel = UILabel(frame: CGRect(x: 20, y: 40, width: 400, height: 20))
+        label.text = positiveValue
+        self.view.addSubview(label)
+        
+        var tf:UITextField = UITextField(frame: CGRect(x: 20, y: 100, width: 300, height: 20))
+        tf.backgroundColor = UIColor.lightGrayColor()
+        tf.text = "Negative Pass Value Notification"
+        tf.tag = 14
+        self.view.addSubview(tf)
+        
+        
+        var but:UIButton = UIButton(frame: CGRect(x: 20, y: 140, width: 50, height: 20))
+        but.setTitle("返回", forState: UIControlState.Normal)
+        but.backgroundColor = UIColor.lightGrayColor()
+        self.view.addSubview(but)
+        
+        but.addTarget(self, action: "back:", forControlEvents: UIControlEvents.TouchUpInside)
+    }
+    
+    func back(sender:UIButton) {
+        var tit = (self.view.viewWithTag(14) as UITextField).text
+        
+        // 发送一个通知，name要对应。单一数据可用object传，多个数据可以用dictionary放进userInfo传
+        NSNotificationCenter.defaultCenter().postNotificationName("notifName", object: tit, userInfo: nil)
+        
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     override func didReceiveMemoryWarning() {
