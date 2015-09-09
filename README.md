@@ -24,7 +24,7 @@ var positiveValue:String = String() //正向传值，接收方
 
 ## 反向传值
 
-反向传值包括 delegate 和闭包两种方式：
+反向传值包括 delegate 、闭包、KVO 和 Notification 四种种方式：
 
 ### Delegate
 
@@ -89,12 +89,6 @@ func back(sender:UIButton) {
     self.dismissViewControllerAnimated(true, completion: nil)
 }
 ```
-
-### 无向传值
-
-* 其实就是利用`NSUserDefaults`来存取数据，哈哈。
-
-* KVO
 
 ### KVO
 
@@ -174,6 +168,55 @@ func back(sender:UIButton) {
 }
 ```
 
+### Notification
 
+RootVC:
 
+viewDidLoad:
+```
+// 注册一个通知
+NSNotificationCenter.defaultCenter().addObserver(self, selector: "notifReceive:", name: "notifName", object: nil)
+```
 
+```
+@IBAction func NotificationButtonDidTapped(sender: AnyObject) {
+    var noti:NotificationViewController = NotificationViewController()
+    noti.positiveValue = self.NotificationTF.text
+    
+    self.presentViewController(noti, animated: true, completion: nil)
+    
+}
+
+// 每次调用对应name的postNotificationName方法会由selector处理
+func notifReceive(notification:NSNotification) {
+    self.NotificationTF.text = "\(notification.object!)"
+    println("notif : \(notification.name), \(notification.object!)")
+}
+
+deinit {
+    ...
+    // removeObserver移除对应name的通知
+    NSNotificationCenter.defaultCenter().removeObserver(self, name: "notifName", object: nil)
+}
+```
+
+NSNotificationVC:
+
+```
+func back(sender:UIButton) {
+    var tit = (self.view.viewWithTag(14) as UITextField).text
+    
+    // 发送一个通知，name要对应。单一数据可用object传，多个数据可以用dictionary放进userInfo传
+    NSNotificationCenter.defaultCenter().postNotificationName("notifName", object: tit, userInfo: nil)
+    
+    self.dismissViewControllerAnimated(true, completion: nil)
+}
+```
+
+## 无向传值
+
+* 其实就是利用`NSUserDefaults`来存取数据，哈哈。
+
+## PS
+
+所谓“反向传值”只是在业务逻辑上是从第二个VC回到第一个VC的过程中传值。并不是说列出的几种传值方式只能在反向情况下使用。
