@@ -8,7 +8,7 @@
 
 import UIKit
 
-//要监听的对象的定义
+// 要监听的对象的定义
 class kvo: NSObject {
     var ptitle : String = ""
     
@@ -31,7 +31,7 @@ class kvo: NSObject {
     }
 }
 class KVOViewController: UIViewController {
-    var k = kvo() //监听的对象
+    var k = kvo() // 监听的对象
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,13 +39,9 @@ class KVOViewController: UIViewController {
         println("KVOViewController viewDidLoad")
         self.view.backgroundColor = UIColor.whiteColor()
         
-        var label:UILabel = UILabel(frame: CGRect(x: 20, y: 40, width: 400, height: 20))
-        label.text = k.title
-        self.view.addSubview(label)
-        
         var tf:UITextField = UITextField(frame: CGRect(x: 20, y: 100, width: 300, height: 20))
         tf.backgroundColor = UIColor.lightGrayColor()
-        tf.text = "Negative Pass Value KVO"
+        tf.text = k.title
         tf.tag = 13
         self.view.addSubview(tf)
         
@@ -62,7 +58,7 @@ class KVOViewController: UIViewController {
     func back(sender:UIButton) {
         var tit = (self.view.viewWithTag(13) as UITextField).text
 
-        k.title = tit //对监听的属性赋值会触发observeValueForKeyPath方法
+        k.title = tit // 对监听的属性赋值会触发observeValueForKeyPath方法
 
         self.dismissViewControllerAnimated(true, completion: nil)
     }
@@ -85,5 +81,9 @@ class KVOViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.view.endEditing(true)
+    }
 }

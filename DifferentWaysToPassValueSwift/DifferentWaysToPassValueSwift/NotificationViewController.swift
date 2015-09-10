@@ -17,14 +17,10 @@ class NotificationViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         println("NotificationViewController viewDidLoad")
         self.view.backgroundColor = UIColor.whiteColor()
-
-        var label:UILabel = UILabel(frame: CGRect(x: 20, y: 40, width: 400, height: 20))
-        label.text = positiveValue
-        self.view.addSubview(label)
         
         var tf:UITextField = UITextField(frame: CGRect(x: 20, y: 100, width: 300, height: 20))
         tf.backgroundColor = UIColor.lightGrayColor()
-        tf.text = "Negative Pass Value Notification"
+        tf.text = positiveValue
         tf.tag = 14
         self.view.addSubview(tf)
         
@@ -49,6 +45,11 @@ class NotificationViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.view.endEditing(true)
     }
     
 }

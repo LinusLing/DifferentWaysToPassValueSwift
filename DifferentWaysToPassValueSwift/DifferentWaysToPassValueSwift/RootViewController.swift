@@ -10,10 +10,7 @@ import UIKit
 
 class RootViewController: UIViewController, delegateOfNegative {
     
-    @IBOutlet weak var delegateTF: UITextField!
-    @IBOutlet weak var KVOTF: UITextField!
-    @IBOutlet weak var blockTF: UITextField!
-    @IBOutlet weak var NotificationTF: UITextField!
+    @IBOutlet weak var positiveTF: UITextField!
 
     
     var kvc:KVOViewController = KVOViewController() // 全局的KVOvc方便在deinit时removeobserver
@@ -29,8 +26,9 @@ class RootViewController: UIViewController, delegateOfNegative {
     }
     
     @IBAction func delegateButtonDidTapped(sender: AnyObject) {
+//        setTFValue(sender)
         
-        var title = self.delegateTF.text
+        var title = self.positiveTF.text
         
         var del:DelegateViewController = DelegateViewController()
         del.positiveValue = title // 正向传值
@@ -41,20 +39,20 @@ class RootViewController: UIViewController, delegateOfNegative {
     
     // 实现delegate的方法
     func passValue(str:String) {
-        self.delegateTF.text = str
+        self.positiveTF.text = str
     }
     
     // ------------------------------------
     
     @IBAction func blockButtonDidTapped(sender: AnyObject) {
-        self.saveUD(self.blockTF.text)
+        self.saveUD(self.positiveTF.text)
         
         var blo:BlockViewController = BlockViewController()
         
         // 设置block中要传递的值的接收方式
         blo.passBlockValue = {
             (title:String) in
-            self.blockTF.text = title
+            self.positiveTF.text = title
         }
         
         self.presentViewController(blo, animated: true, completion: nil)
@@ -73,7 +71,7 @@ class RootViewController: UIViewController, delegateOfNegative {
         
         // addObserver添加监听
         kvc.k.addObserver(self, forKeyPath: "title", options: NSKeyValueObservingOptions.Old | NSKeyValueObservingOptions.New, context: nil)
-        kvc.k.title = self.KVOTF.text
+        kvc.k.title = self.positiveTF.text
         self.presentViewController(kvc, animated: true, completion: nil)
 
     }
@@ -84,7 +82,7 @@ class RootViewController: UIViewController, delegateOfNegative {
             println(change)
             var newvalue: AnyObject? = change["new"]
             println("the new value is \(newvalue!)")
-            self.KVOTF.text = "\(newvalue!)" // 将监听到的变化值赋值给TF来显示
+            self.positiveTF.text = "\(newvalue!)" // 将监听到的变化值赋值给TF来显示
         }
     }
     
@@ -103,7 +101,7 @@ class RootViewController: UIViewController, delegateOfNegative {
     
     @IBAction func NotificationButtonDidTapped(sender: AnyObject) {
         var noti:NotificationViewController = NotificationViewController()
-        noti.positiveValue = self.NotificationTF.text
+        noti.positiveValue = self.positiveTF.text
         
         self.presentViewController(noti, animated: true, completion: nil)
         
@@ -111,7 +109,7 @@ class RootViewController: UIViewController, delegateOfNegative {
 
     // 每次调用对应name的postNotificationName方法会由selector处理
     func notifReceive(notification:NSNotification) {
-        self.NotificationTF.text = "\(notification.object!)"
+        self.positiveTF.text = "\(notification.object!)"
         println("notif : \(notification.name), \(notification.object!)")
     }
     
@@ -120,5 +118,9 @@ class RootViewController: UIViewController, delegateOfNegative {
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.view.endEditing(true)
+    }
 }
 

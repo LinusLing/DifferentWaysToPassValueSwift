@@ -14,9 +14,9 @@ protocol delegateOfNegative {
 
 class DelegateViewController: UIViewController {
     
-    var positiveValue:String = String() //正向传值，接收方
+    var positiveValue:String = String() // 正向传值，接收方
     
-    var delegate:delegateOfNegative? //定义具体的delegate
+    var delegate:delegateOfNegative? // 定义具体的delegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,13 +24,9 @@ class DelegateViewController: UIViewController {
         println("DelegateViewController viewDidLoad")
         self.view.backgroundColor = UIColor.whiteColor()
         
-        var label:UILabel = UILabel(frame: CGRect(x: 20, y: 40, width: 400, height: 20))
-        label.text = self.positiveValue //正向传值，赋值
-        self.view.addSubview(label)
-        
         var tf:UITextField = UITextField(frame: CGRect(x: 20, y: 100, width: 300, height: 20))
         tf.backgroundColor = UIColor.lightGrayColor()
-        tf.text = "Negative Pass Value Delegate"
+        tf.text = self.positiveValue // 正向传值，赋值
         tf.tag = 10
         self.view.addSubview(tf)
         
@@ -44,7 +40,7 @@ class DelegateViewController: UIViewController {
     
     func back(sender:UIButton) {
         var tf:UITextField = self.view.viewWithTag(10) as UITextField
-        delegate?.passValue(tf.text) //调用delegate的传值方法passValue
+        delegate?.passValue(tf.text) // 调用delegate的传值方法passValue
         
         self.dismissViewControllerAnimated(true, completion: nil)
     }
@@ -54,4 +50,8 @@ class DelegateViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.view.endEditing(true)
+    }
 }
