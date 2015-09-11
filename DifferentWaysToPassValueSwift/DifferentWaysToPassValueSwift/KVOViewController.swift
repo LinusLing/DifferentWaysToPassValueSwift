@@ -42,7 +42,7 @@ class KVOViewController: UIViewController {
         var tf:UITextField = UITextField(frame: CGRect(x: 20, y: 100, width: 300, height: 20))
         tf.backgroundColor = UIColor.lightGrayColor()
         tf.text = k.title
-        tf.tag = 13
+        tf.tag = 10003
         self.view.addSubview(tf)
         
 //        k.addObserver(self, forKeyPath: "title", options: NSKeyValueObservingOptions.New | NSKeyValueObservingOptions.Old, context: nil)
@@ -56,7 +56,7 @@ class KVOViewController: UIViewController {
     }
     
     func back(sender:UIButton) {
-        var tit = (self.view.viewWithTag(13) as UITextField).text
+        var tit = (self.view.viewWithTag(10003) as UITextField).text
 
         k.title = tit // 对监听的属性赋值会触发observeValueForKeyPath方法
 

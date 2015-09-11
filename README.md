@@ -1,8 +1,10 @@
 # DifferentWaysToPassValueSwift
 
-这是一个工程，展示了如何使用 Swift 进行传值，包括正向传值、反向传值和无向传值。
+这是一个工程，展示了如何使用 Swift 1.2 进行传值，包括正向传值、反向传值和无向传值。
 
 ## Demo
+
+demo.gif 有1.4M，见谅。
 
 ![](https://raw.githubusercontent.com/kevin833752/DifferentWaysToPassValueSwift/master/DifferentWaysToPassValueSwift/demo.gif)
 
@@ -215,8 +217,10 @@ func back(sender:UIButton) {
 
 ## 无向传值
 
-* 其实就是利用`NSUserDefaults`来存取数据，哈哈。
+其实就是利用`NSUserDefaults`来存取数据，哈哈。
 
 ## PS
 
-所谓“反向传值”只是在业务逻辑上是从第二个VC回到第一个VC的过程中传值。并不是说列出的几种传值方式只能在反向情况下使用。
+* 所谓“反向传值”只是在业务逻辑上是从第二个 VC 回到第一个 VC 的过程中传值。并不是说列出的几种传值方式只能在反向情况下使用。
+
+* 特别感谢 [@靛青K](http://weibo.com/2314535081) 给我提出的宝贵意见或建议 :]

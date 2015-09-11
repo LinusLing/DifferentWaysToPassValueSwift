@@ -27,7 +27,7 @@ class DelegateViewController: UIViewController {
         var tf:UITextField = UITextField(frame: CGRect(x: 20, y: 100, width: 300, height: 20))
         tf.backgroundColor = UIColor.lightGrayColor()
         tf.text = self.positiveValue // 正向传值，赋值
-        tf.tag = 10
+        tf.tag = 10000
         self.view.addSubview(tf)
         
         var but:UIButton = UIButton(frame: CGRect(x: 20, y: 140, width: 50, height: 20))
@@ -39,7 +39,7 @@ class DelegateViewController: UIViewController {
     }
     
     func back(sender:UIButton) {
-        var tf:UITextField = self.view.viewWithTag(10) as UITextField
+        var tf:UITextField = self.view.viewWithTag(10000) as UITextField
         delegate?.passValue(tf.text) // 调用delegate的传值方法passValue
         
         self.dismissViewControllerAnimated(true, completion: nil)

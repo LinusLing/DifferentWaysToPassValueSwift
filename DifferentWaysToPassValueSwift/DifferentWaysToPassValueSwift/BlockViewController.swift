@@ -21,7 +21,7 @@ class BlockViewController: UIViewController {
         var tf:UITextField = UITextField(frame: CGRect(x: 20, y: 100, width: 300, height: 20))
         tf.backgroundColor = UIColor.lightGrayColor()
         tf.text = NSUserDefaults().objectForKey("title") as? String
-        tf.tag = 11
+        tf.tag = 10001
         self.view.addSubview(tf)
         
         var but:UIButton = UIButton(frame: CGRect(x: 20, y: 140, width: 50, height: 20))
@@ -33,7 +33,7 @@ class BlockViewController: UIViewController {
     }
     
     func back(sender:UIButton) {
-        var tf:UITextField = self.view.viewWithTag(11) as UITextField
+        var tf:UITextField = self.view.viewWithTag(10001) as UITextField
         passBlockValue?(title:tf.text) // 使用block传递title这个值
         
         self.dismissViewControllerAnimated(true, completion: nil)
