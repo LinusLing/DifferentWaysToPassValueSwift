@@ -1,6 +1,6 @@
 # DifferentWaysToPassValueSwift
 
-这是一个工程，展示了如何在 VC 之间进行传值，包括正向传值、反向传值和无向传值。
+这是一个工程，展示了如何在 VC 之间进行传值，包括正向传值、反向传值和无向传值。```swift
 
 * 本示例代码基于 Xcode 7 ，并使用Swift 2.0 写成。
 
@@ -12,7 +12,7 @@
 
 RootVC:
 
-```
+```swift
 let del:DelegateViewController = DelegateViewController()
 del.positiveValue = title! // 正向传值
 self.presentViewController(del, animated: true, completion: nil)
@@ -20,7 +20,7 @@ self.presentViewController(del, animated: true, completion: nil)
 
 DelegateVC:
 
-```
+```swift
 var positiveValue:String = String() // 正向传值，接收方
 ```
 
@@ -32,7 +32,7 @@ var positiveValue:String = String() // 正向传值，接收方
 
 RootVC:
 
-```
+```swift
 @IBAction func delegateButtonDidTapped(sender: AnyObject) {
     ...
     del.delegate = self // 设置下一个VC的delegate为当前的rootVC
@@ -40,7 +40,7 @@ RootVC:
 }
 ```
 
-```
+```swift
 //实现delegate的方法
 func passValue(str:String) {
     self.delegateTF.text = str
@@ -49,11 +49,11 @@ func passValue(str:String) {
 
 DelegateVC:
 
-```
+```swift
 var delegate:delegateOfNegative? //定义具体的delegate
 ```
 
-```
+```swift
 func back(sender:UIButton) {
     let tf:UITextField = self.view.viewWithTag(10000) as! UITextField
     delegate?.passValue(tf.text!) // 调用delegate的传值方法passValue
@@ -65,7 +65,7 @@ func back(sender:UIButton) {
 
 RootVC:
 
-```
+```swift
 @IBAction func blockButtonDidTapped(sender: AnyObject) {
     ...
     let blo:BlockViewController = BlockViewController()
@@ -80,11 +80,11 @@ RootVC:
 
 BlockVC:
 
-```
+```swift
 var passBlockValue:((title:String) -> Void)? // 定义block，包含参数title
 ```
 
-```
+```swift
 func back(sender:UIButton) {
     let tf:UITextField = self.view.viewWithTag(10001) as! UITextField
     passBlockValue?(title:tf.text!) // 使用block传递title这个值
@@ -98,11 +98,11 @@ KVO只要是监听的属性，不管是正向还是反向都会触发`observeVal
 
 RootVC:
 
-```
+```swift
 var kvc:KVOViewController = KVOViewController() // 全局的KVOvc方便在deinit时removeobserver
 ```
 
-```
+```swift
 @IBAction func KVOButtonDidTapped(sender: AnyObject) {
     kvc.k = kvo()
         
@@ -113,7 +113,7 @@ var kvc:KVOViewController = KVOViewController() // 全局的KVOvc方便在deinit
 }
 ```
 
-```
+```swift
 // 监听对象的属性或者实例变量发生变化，就自动调用该函数，执行相应操作
 override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
     if keyPath == "title" {
@@ -134,7 +134,7 @@ deinit {
 
 KVOVC:
 
-```
+```swift
 //要监听的对象的定义
 class kvo: NSObject {
     var ptitle : String = ""
@@ -159,7 +159,7 @@ class kvo: NSObject {
 }
 ```
 
-```
+```swift
 func back(sender:UIButton) {
     let tit = (self.view.viewWithTag(10003) as! UITextField).text
 
@@ -175,12 +175,12 @@ RootVC:
 
 viewDidLoad:
 
-```
+```swift
 // 注册一个通知
 NSNotificationCenter.defaultCenter().addObserver(self, selector: "notifReceive:", name: "notifName", object: nil)
 ```
 
-```
+```swift
 @IBAction func NotificationButtonDidTapped(sender: AnyObject) {
     let noti:NotificationViewController = NotificationViewController()
     noti.positiveValue = self.positiveTF.text!
@@ -203,7 +203,7 @@ deinit {
 
 NotificationVC:
 
-```
+```swift
 func back(sender:UIButton) {
     let tit = (self.view.viewWithTag(10004) as! UITextField).text
         
