@@ -1,10 +1,10 @@
 # DifferentWaysToPassValueSwift
 
-这是一个工程，展示了如何使用 Swift 1.2 进行传值，包括正向传值、反向传值和无向传值。
+这是一个工程，展示了如何在 VC 之间进行传值，包括正向传值、反向传值和无向传值。
+
+* 本示例代码基于 Xcode 7 ，并使用Swift 2.0 写成。
 
 ## Demo
-
-demo.gif 有1.4M，见谅。
 
 ![](https://raw.githubusercontent.com/kevin833752/DifferentWaysToPassValueSwift/master/DifferentWaysToPassValueSwift/demo.gif)
 
@@ -13,15 +13,15 @@ demo.gif 有1.4M，见谅。
 RootVC:
 
 ```
-var del:DelegateViewController = DelegateViewController()
-del.positiveValue = title //正向传值
+let del:DelegateViewController = DelegateViewController()
+del.positiveValue = title! // 正向传值
 self.presentViewController(del, animated: true, completion: nil)
 ```
 
 DelegateVC:
 
 ```
-var positiveValue:String = String() //正向传值，接收方
+var positiveValue:String = String() // 正向传值，接收方
 ```
 
 ## 反向传值
@@ -35,7 +35,7 @@ RootVC:
 ```
 @IBAction func delegateButtonDidTapped(sender: AnyObject) {
     ...
-    del.delegate = self //设置下一个VC的delegate为当前的rootVC
+    del.delegate = self // 设置下一个VC的delegate为当前的rootVC
     ...
 }
 ```
@@ -55,8 +55,8 @@ var delegate:delegateOfNegative? //定义具体的delegate
 
 ```
 func back(sender:UIButton) {
-    var tf:UITextField = self.view.viewWithTag(10) as UITextField
-    delegate?.passValue(tf.text) //调用delegate的传值方法passValue
+    let tf:UITextField = self.view.viewWithTag(10000) as! UITextField
+    delegate?.passValue(tf.text!) // 调用delegate的传值方法passValue
     self.dismissViewControllerAnimated(true, completion: nil)
 }
 ```
@@ -68,11 +68,11 @@ RootVC:
 ```
 @IBAction func blockButtonDidTapped(sender: AnyObject) {
     ...
-    var blo:BlockViewController = BlockViewController()
-    //设置block中要传递的值的接收方式
+    let blo:BlockViewController = BlockViewController()
+    // 设置block中要传递的值的接收方式
     blo.passBlockValue = {
         (title:String) in
-        self.blockTF.text = title
+        self.positiveTF.text = title
     }
     self.presentViewController(blo, animated: true, completion: nil)
 }
@@ -81,13 +81,13 @@ RootVC:
 BlockVC:
 
 ```
-var passBlockValue:((title:String) -> Void)? //定义block，包含参数title
+var passBlockValue:((title:String) -> Void)? // 定义block，包含参数title
 ```
 
 ```
 func back(sender:UIButton) {
-    var tf:UITextField = self.view.viewWithTag(11) as UITextField
-    passBlockValue?(title:tf.text) //使用block传递title这个值
+    let tf:UITextField = self.view.viewWithTag(10001) as! UITextField
+    passBlockValue?(title:tf.text!) // 使用block传递title这个值
     self.dismissViewControllerAnimated(true, completion: nil)
 }
 ```
@@ -99,7 +99,7 @@ KVO只要是监听的属性，不管是正向还是反向都会触发`observeVal
 RootVC:
 
 ```
-var kvc:KVOViewController = KVOViewController() //全局的KVOvc方便在deinit时removeobserver
+var kvc:KVOViewController = KVOViewController() // 全局的KVOvc方便在deinit时removeobserver
 ```
 
 ```
@@ -107,22 +107,21 @@ var kvc:KVOViewController = KVOViewController() //全局的KVOvc方便在deinit�
     kvc.k = kvo()
         
     // addObserver添加监听
-    kvc.k.addObserver(self, forKeyPath: "title", options: NSKeyValueObservingOptions.Old | NSKeyValueObservingOptions.New, context: nil)
-    
-    kvc.k.title = self.KVOTF.text
-    
+    kvc.k.addObserver(self, forKeyPath: "title", options: [NSKeyValueObservingOptions.Old, NSKeyValueObservingOptions.New], context: nil)
+    kvc.k.title = self.positiveTF.text!
     self.presentViewController(kvc, animated: true, completion: nil)
 }
 ```
 
 ```
 // 监听对象的属性或者实例变量发生变化，就自动调用该函数，执行相应操作
-override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
+override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
     if keyPath == "title" {
-        println(change)
-        var newvalue: AnyObject? = change["new"]
-        println("the new value is \(newvalue!)")
-        self.KVOTF.text = "\(newvalue!)" //将监听到的变化值赋值给TF来显示
+        print(change!)
+        var nv = change!
+        let newvalue: AnyObject? = nv["new"]
+        print("the new value is \(newvalue!)")
+        self.positiveTF.text = "\(newvalue!)" // 将监听到的变化值赋值给TF来显示
     }
 }
 
@@ -162,10 +161,10 @@ class kvo: NSObject {
 
 ```
 func back(sender:UIButton) {
-    var tit = (self.view.viewWithTag(13) as UITextField).text
-    
-    k.title = tit //对监听的属性赋值会触发observeValueForKeyPath方法
-    
+    let tit = (self.view.viewWithTag(10003) as! UITextField).text
+
+    k.title = tit! // 对监听的属性赋值会触发observeValueForKeyPath方法
+
     self.dismissViewControllerAnimated(true, completion: nil)
 }
 ```
@@ -175,6 +174,7 @@ func back(sender:UIButton) {
 RootVC:
 
 viewDidLoad:
+
 ```
 // 注册一个通知
 NSNotificationCenter.defaultCenter().addObserver(self, selector: "notifReceive:", name: "notifName", object: nil)
@@ -182,17 +182,16 @@ NSNotificationCenter.defaultCenter().addObserver(self, selector: "notifReceive:"
 
 ```
 @IBAction func NotificationButtonDidTapped(sender: AnyObject) {
-    var noti:NotificationViewController = NotificationViewController()
-    noti.positiveValue = self.NotificationTF.text
-    
-    self.presentViewController(noti, animated: true, completion: nil)
-    
+    let noti:NotificationViewController = NotificationViewController()
+    noti.positiveValue = self.positiveTF.text!
+        
+    self.presentViewController(noti, animated: true, completion: nil)    
 }
 
 // 每次调用对应name的postNotificationName方法会由selector处理
 func notifReceive(notification:NSNotification) {
-    self.NotificationTF.text = "\(notification.object!)"
-    println("notif : \(notification.name), \(notification.object!)")
+    self.positiveTF.text = "\(notification.object!)"
+    print("notif : \(notification.name), \(notification.object!)")
 }
 
 deinit {
@@ -202,12 +201,12 @@ deinit {
 }
 ```
 
-NSNotificationVC:
+NotificationVC:
 
 ```
 func back(sender:UIButton) {
-    var tit = (self.view.viewWithTag(14) as UITextField).text
-    
+    let tit = (self.view.viewWithTag(10004) as! UITextField).text
+        
     // 发送一个通知，name要对应。单一数据可用object传，多个数据可以用dictionary放进userInfo传
     NSNotificationCenter.defaultCenter().postNotificationName("notifName", object: tit, userInfo: nil)
     
