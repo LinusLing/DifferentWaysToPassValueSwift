@@ -15,16 +15,16 @@ class BlockViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        println("BlockViewController viewDidLoad")
+        print("BlockViewController viewDidLoad")
         self.view.backgroundColor = UIColor.whiteColor()
         
-        var tf:UITextField = UITextField(frame: CGRect(x: 20, y: 100, width: 300, height: 20))
+        let tf:UITextField = UITextField(frame: CGRect(x: 20, y: 100, width: 300, height: 20))
         tf.backgroundColor = UIColor.lightGrayColor()
         tf.text = NSUserDefaults().objectForKey("title") as? String
         tf.tag = 10001
         self.view.addSubview(tf)
         
-        var but:UIButton = UIButton(frame: CGRect(x: 20, y: 140, width: 50, height: 20))
+        let but:UIButton = UIButton(frame: CGRect(x: 20, y: 140, width: 50, height: 20))
         but.setTitle("返回", forState: UIControlState.Normal)
         but.backgroundColor = UIColor.lightGrayColor()
         self.view.addSubview(but)
@@ -33,8 +33,8 @@ class BlockViewController: UIViewController {
     }
     
     func back(sender:UIButton) {
-        var tf:UITextField = self.view.viewWithTag(10001) as UITextField
-        passBlockValue?(title:tf.text) // 使用block传递title这个值
+        let tf:UITextField = self.view.viewWithTag(10001) as! UITextField
+        passBlockValue?(title:tf.text!) // 使用block传递title这个值
         
         self.dismissViewControllerAnimated(true, completion: nil)
     }

@@ -23,11 +23,11 @@ class kvo: NSObject {
     }
     
     override init() {
-        println("init")
+        print("init")
     }
     
     deinit {
-        println("deinit")
+        print("deinit")
     }
 }
 class KVOViewController: UIViewController {
@@ -36,10 +36,10 @@ class KVOViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        println("KVOViewController viewDidLoad")
+        print("KVOViewController viewDidLoad")
         self.view.backgroundColor = UIColor.whiteColor()
         
-        var tf:UITextField = UITextField(frame: CGRect(x: 20, y: 100, width: 300, height: 20))
+        let tf:UITextField = UITextField(frame: CGRect(x: 20, y: 100, width: 300, height: 20))
         tf.backgroundColor = UIColor.lightGrayColor()
         tf.text = k.title
         tf.tag = 10003
@@ -47,7 +47,7 @@ class KVOViewController: UIViewController {
         
 //        k.addObserver(self, forKeyPath: "title", options: NSKeyValueObservingOptions.New | NSKeyValueObservingOptions.Old, context: nil)
         
-        var but:UIButton = UIButton(frame: CGRect(x: 20, y: 140, width: 50, height: 20))
+        let but:UIButton = UIButton(frame: CGRect(x: 20, y: 140, width: 50, height: 20))
         but.setTitle("返回", forState: UIControlState.Normal)
         but.backgroundColor = UIColor.lightGrayColor()
         self.view.addSubview(but)
@@ -56,9 +56,9 @@ class KVOViewController: UIViewController {
     }
     
     func back(sender:UIButton) {
-        var tit = (self.view.viewWithTag(10003) as UITextField).text
+        let tit = (self.view.viewWithTag(10003) as! UITextField).text
 
-        k.title = tit // 对监听的属性赋值会触发observeValueForKeyPath方法
+        k.title = tit! // 对监听的属性赋值会触发observeValueForKeyPath方法
 
         self.dismissViewControllerAnimated(true, completion: nil)
     }

@@ -18,7 +18,7 @@ class RootViewController: UIViewController, delegateOfNegative {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        println("RootViewController viewDidLoad")
+        print("RootViewController viewDidLoad")
 
         
         // 注册一个通知
@@ -28,10 +28,10 @@ class RootViewController: UIViewController, delegateOfNegative {
     @IBAction func delegateButtonDidTapped(sender: AnyObject) {
 //        setTFValue(sender)
         
-        var title = self.positiveTF.text
+        let title = self.positiveTF.text
         
-        var del:DelegateViewController = DelegateViewController()
-        del.positiveValue = title // 正向传值
+        let del:DelegateViewController = DelegateViewController()
+        del.positiveValue = title! // 正向传值
         self.presentViewController(del, animated: true, completion: nil)
         
         del.delegate = self // 设置下一个VC的delegate为当前的rootVC
@@ -45,9 +45,9 @@ class RootViewController: UIViewController, delegateOfNegative {
     // ------------------------------------
     
     @IBAction func blockButtonDidTapped(sender: AnyObject) {
-        self.saveUD(self.positiveTF.text)
+        self.saveUD(self.positiveTF.text!)
         
-        var blo:BlockViewController = BlockViewController()
+        let blo:BlockViewController = BlockViewController()
         
         // 设置block中要传递的值的接收方式
         blo.passBlockValue = {
@@ -70,18 +70,19 @@ class RootViewController: UIViewController, delegateOfNegative {
         kvc.k = kvo()
         
         // addObserver添加监听
-        kvc.k.addObserver(self, forKeyPath: "title", options: NSKeyValueObservingOptions.Old | NSKeyValueObservingOptions.New, context: nil)
-        kvc.k.title = self.positiveTF.text
+        kvc.k.addObserver(self, forKeyPath: "title", options: [NSKeyValueObservingOptions.Old, NSKeyValueObservingOptions.New], context: nil)
+        kvc.k.title = self.positiveTF.text!
         self.presentViewController(kvc, animated: true, completion: nil)
 
     }
     
     // 监听对象的属性或者实例变量发生变化，就自动调用该函数，执行相应操作
-    override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
+    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         if keyPath == "title" {
-            println(change)
-            var newvalue: AnyObject? = change["new"]
-            println("the new value is \(newvalue!)")
+            print(change!)
+            var nv = change!
+            let newvalue: AnyObject? = nv["new"]
+            print("the new value is \(newvalue!)")
             self.positiveTF.text = "\(newvalue!)" // 将监听到的变化值赋值给TF来显示
         }
     }
@@ -100,8 +101,8 @@ class RootViewController: UIViewController, delegateOfNegative {
     }
     
     @IBAction func NotificationButtonDidTapped(sender: AnyObject) {
-        var noti:NotificationViewController = NotificationViewController()
-        noti.positiveValue = self.positiveTF.text
+        let noti:NotificationViewController = NotificationViewController()
+        noti.positiveValue = self.positiveTF.text!
         
         self.presentViewController(noti, animated: true, completion: nil)
         
@@ -110,7 +111,7 @@ class RootViewController: UIViewController, delegateOfNegative {
     // 每次调用对应name的postNotificationName方法会由selector处理
     func notifReceive(notification:NSNotification) {
         self.positiveTF.text = "\(notification.object!)"
-        println("notif : \(notification.name), \(notification.object!)")
+        print("notif : \(notification.name), \(notification.object!)")
     }
     
     override func didReceiveMemoryWarning() {

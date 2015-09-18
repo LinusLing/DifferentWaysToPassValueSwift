@@ -15,17 +15,17 @@ class NotificationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        println("NotificationViewController viewDidLoad")
+        print("NotificationViewController viewDidLoad")
         self.view.backgroundColor = UIColor.whiteColor()
         
-        var tf:UITextField = UITextField(frame: CGRect(x: 20, y: 100, width: 300, height: 20))
+        let tf:UITextField = UITextField(frame: CGRect(x: 20, y: 100, width: 300, height: 20))
         tf.backgroundColor = UIColor.lightGrayColor()
         tf.text = positiveValue
         tf.tag = 10004
         self.view.addSubview(tf)
         
         
-        var but:UIButton = UIButton(frame: CGRect(x: 20, y: 140, width: 50, height: 20))
+        let but:UIButton = UIButton(frame: CGRect(x: 20, y: 140, width: 50, height: 20))
         but.setTitle("返回", forState: UIControlState.Normal)
         but.backgroundColor = UIColor.lightGrayColor()
         self.view.addSubview(but)
@@ -34,7 +34,7 @@ class NotificationViewController: UIViewController {
     }
     
     func back(sender:UIButton) {
-        var tit = (self.view.viewWithTag(10004) as UITextField).text
+        let tit = (self.view.viewWithTag(10004) as! UITextField).text
         
         // 发送一个通知，name要对应。单一数据可用object传，多个数据可以用dictionary放进userInfo传
         NSNotificationCenter.defaultCenter().postNotificationName("notifName", object: tit, userInfo: nil)
